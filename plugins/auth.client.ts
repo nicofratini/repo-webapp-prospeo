@@ -50,6 +50,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     // Get runtime config to verify Supabase credentials
     const config = useRuntimeConfig()
     if (!config.public.supabaseUrl || !config.public.supabaseKey) {
+      console.error('Missing Supabase credentials in runtime config:', {
+        hasUrl: !!config.public.supabaseUrl,
+        hasKey: !!config.public.supabaseKey
+      })
       throw new Error('Supabase credentials not found in runtime config')
     }
 

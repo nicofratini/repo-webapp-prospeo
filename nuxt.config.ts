@@ -9,32 +9,6 @@ export default defineNuxtConfig({
     'nuxt-icon'
   ],
   css: ['~/assets/css/tailwind.css'],
-  supabase: {
-    redirect: true,
-    redirectOptions: {
-      login: '/auth/login',
-      callback: '/auth/confirm',
-      exclude: [],
-    },
-    cookieOptions: {
-      name: 'sb-auth',
-      lifetime: 60 * 60 * 24 * 30, // 30 days
-      domain: '',
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production'
-    },
-    clientOptions: {
-      auth: {
-        flowType: 'pkce',
-        detectSessionInUrl: true,
-        persistSession: true,
-        autoRefreshToken: true,
-        storageKey: 'sb-auth-token',
-        storage: process.client ? window.localStorage : undefined
-      }
-    }
-  },
   nitro: {
     compressPublicAssets: true,
     routeRules: {
@@ -49,7 +23,10 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    public: {}
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY
+    }
   },
   app: {
     baseURL: '/',
@@ -70,6 +47,15 @@ export default defineNuxtConfig({
         port: 3000,
         clientPort: 3000
       }
+    }
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+    redirectOptions: {
+      login: '/auth/login',
+      callback: '/dashboard',
+      exclude: ['/auth/*']
     }
   },
   ssr: true,
