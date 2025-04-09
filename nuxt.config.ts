@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     },
     cookieOptions: {
       name: 'sb-auth',
-      lifetime: 60 * 60 * 24 * 30, // Increased to 30 days
+      lifetime: 60 * 60 * 24 * 30, // 30 days
       domain: '',
       path: '/',
       sameSite: 'lax',
@@ -49,10 +49,7 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    public: {
-      supabaseUrl: process.env.SUPABASE_URL || '',
-      supabaseKey: process.env.SUPABASE_KEY || ''
-    }
+    public: {}
   },
   app: {
     baseURL: '/',
@@ -69,13 +66,13 @@ export default defineNuxtConfig({
     server: {
       hmr: {
         protocol: 'ws',
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        port: 3000,
+        clientPort: 3000
       }
     }
   },
-  // Enable SSR for better development experience
   ssr: true,
-  // Configure dev server
   devServer: {
     port: 3000,
     host: '0.0.0.0'
